@@ -11,5 +11,5 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Imports: gsheet, dplyr,stringr,janitor,lubridate,weights,forcats,flexdashboard,shiny,shinyWidgets,tidyverse,plotly,ggrepel,data.table,rvest,DT,DataExplorer,umap,factoextra,kableExtra,crosstalk
-
-
+URL: https://github.com/hareshsuppiah/athslpbehaviour
+BugReports: https://github.com/hareshsuppiah/athslpbehaviour/issues
