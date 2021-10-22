@@ -1,5 +1,5 @@
 ---
-title: "Athlete Sleep Characteristics Classification Dashboard - Reactive Kmeans"
+title: "Athlete Sleep Characteristics Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     theme:
