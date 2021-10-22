@@ -1,0 +1,374 @@
+---
+title: "Athlete Sleep Characteristics Classification Dashboard - Reactive Kmeans"
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+    orientation: rows
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(shiny)
+library(shinyWidgets)
+library(tidyverse)
+library(plotly)
+library(tidyverse)
+library(ggrepel)
+library(data.table)
+library(rvest)
+library(DT)
+library(DataExplorer)
+library(correlationfunnel)
+library(recipes)
+library(dplyr)
+library(janitor)
+library(umap)
+library(forcats)
+library(factoextra)
+library(kableExtra)
+library(crosstalk)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# Import data
+# load("AthSlpBehaviour.RData")
+# load(data)
+# clean_sheet_data(data_google_2)
+
+# athslpbehaviour_df <- read.csv("output/asbq_psqi_df.csv")
+# athslpbehaviour_df <- athslpbehaviour_df %>% 
+#   select(-c(X))
+
+
+asbq_psqi_df <- athslpbehaviour_df %>%
+  clean_names() 
+
+# Scale data
+
+data_cleaned_scaled1 <- asbq_psqi_df %>%
+  select(5:33)
+
+data_cleaned_scaled <-   scale(data_cleaned_scaled1)
+
+```
+
+
+
+
+<!-- # Athlete Exploration -->
+
+## Column {.sidebar data-width=400}
+------------------------------------------------------------
+
+<!-- #### How it works -->
+
+
+This interactive plot provides a visual representation of the athlete clusters based on variables from their **Pittsburgh Sleep Quality Index (PSQI)** and **Athlete Sleep Behavior Questionnaire (ASBQ)** results. Selecting the dots (each representing an athlete) will populate an __Athlete Information__ downloadable table to get a detailed breakdown of the sleep-related characteristics of the selected athletes. 
+
+<hr>
+
+
+```{r}
+
+shiny::numericInput(
+  inputId = "kmeans_numbers",
+  label = h4("Specify number of k-means Clusters"),
+  value = 3
+  
+)
+
+```
+
+The optimal number of classification groups (clusters) can be determined using the *elbow method*.
+
+<hr>
+
+```{r}
+# wss <- 0
+# set.seed(1234)
+# for (i in 1:10) {
+#   km.out <- kmeans(data_cleaned_scaled, centers = i, nstart = 2)
+#   wss[i] <-  km.out$tot.withinss
+# }
+# plot(1:10,
+#      wss,
+#      type = "b",
+#      xlab = "No. of Clusters",
+#      ylab = "Within groups SOS")
+
+# Use map_dbl to run many models with varying value of k (centers)
+tot_withinss <- map_dbl(1:10,  function(k){
+  set.seed(1234)
+  model <- kmeans(x = data_cleaned_scaled, centers = k)
+  model$tot.withinss
+})
+ 
+# Generate a data frame containing both k and tot_withinss
+elbow_df <- data.frame(
+  k = 1:10,
+  tot_withinss = tot_withinss
+)
+ 
+ 
+# Plot the elbow plot
+
+ggplot1 <- ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
+  geom_line() + geom_point()+
+  scale_x_continuous(breaks = 1:10)+
+  labs(
+    title = "Elbow plot to determine optimal no. of clusters",
+    x = "Within groups SOS",
+    y = "No. of clusters"
+  )+
+  theme_light()+
+  theme(axis.text = element_text(size = 2))
+
+renderPlot({
+  ggplot1
+  
+}
+)
+
+```
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+k.high <- reactive({
+
+
+## Edit number of clusters here
+  set.seed(1234)
+  data_cleaned_scaled %>% 
+    kmeans(centers = input$kmeans_numbers) # reactive expression
+
+
+})
+
+```
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+
+k_means_complete <- reactive({
+
+
+gender_grp <- asbq_psqi_df %>%
+  select(gender)
+name_grp <- asbq_psqi_df %>%
+  select(name)
+sport_grp <- asbq_psqi_df %>%
+  select(sport)
+psqi_cat <- asbq_psqi_df %>%
+  select(psqi_cat)
+
+
+  cbind(
+    data_cleaned_scaled1,
+    gender = gender_grp,
+    name = name_grp,
+    sport = sport_grp,
+    psqi_cat = psqi_cat,
+    cluster = k.high()$cluster
+  )
+
+})
+
+
+shared_athletes <- reactive({
+  
+# Prepare umap  ----
+
+umap_high <- data_cleaned_scaled %>%
+  umap()
+
+umap_high_results_tbl <- umap_high$layout %>%
+  as_tibble() %>%
+  set_names(c("x", "y")) %>%
+  bind_cols(k_means_complete() %>% select(sport))
+
+umap_kmeans_high_results_tbl <- umap_high_results_tbl %>%
+  mutate(
+    cluster = k_means_complete()$cluster,
+    name = k_means_complete()$name,
+    sport = k_means_complete()$sport,
+    asbq = k_means_complete()$asbq_global,
+    psqi_cat = k_means_complete()$psqi_cat,
+    psqi = k_means_complete()$psqi_total
+    
+  ) %>%
+  mutate(cluster = as_factor(cluster))
+
+SharedData$new(umap_kmeans_high_results_tbl,
+                                  key = ~ name,
+                                  group = "name")
+
+
+})
+
+```
+
+
+## Column 1 
+
+### Athlete Segmentation Based on ASBQ & PSQI Characteristics
+
+```{r}
+
+output$plotly_1 <- renderPlotly({
+  plot_ly(
+    data = shared_athletes(),
+    x = ~x,
+    y = ~y,
+    color = ~cluster,
+    # colors="Dark2",
+      text  = ~ str_c(
+        "Name: ", name,
+        "</br>",
+        "Sport: ", sport,
+        "</br>",
+        "ASBQ Score: ", asbq,
+        "</br>",
+        "PSQI Score: ", psqi
+        ),
+      source = "A"
+    ) %>%
+    add_markers(size = 3) %>%
+    highlight(
+      on  = "plotly_selected",
+      # off = "plotly_doubleclick",
+      # selectize  = TRUE,
+      # dynamic    = TRUE,
+      persistent = TRUE
+
+
+  ) %>%
+    layout(legend=list(title=list(text='<b> Clusters </b>')))
+
+})
+
+plotlyOutput("plotly_1", height = "400px")
+
+
+```
+
+
+## Column 2
+
+### Athlete Information
+
+```{r}
+
+output$table1 <- DT::renderDataTable({
+  
+  k_means_complete_simple <- k_means_complete() %>%
+  select(
+    name,
+    sport,
+    asbq_global,
+    i_take_afternoon_naps_lasting_two_or_more_hours,
+    i_use_stimulants_when_i_train_compete_e_g_caffeine,
+    i_exercise_train_or_compete_late_at_night_after_7pm,
+    i_consume_alcohol_within_4_hours_of_going_to_bed,
+    i_go_to_bed_at_different_times_each_night_more_than_1_hour_variation,
+    i_go_to_bed_feeling_thirsty,
+    i_go_to_bed_with_sore_muscles,
+    i_use_light_emitting_technology_in_the_hour_leading_up_to_bedtime_e_g_laptop_phone_television_video_games,
+    i_think_plan_and_worry_about_my_sporting_performance_when_i_am_in_bed,
+    i_think_plan_and_worry_about_issues_not_related_to_my_sport_when_i_am_in_bed,
+    i_use_sleeping_pills_tablets_to_help_me_sleep,
+    i_wake_to_go_to_the_bathroom_more_than_once_per_night,
+    i_wake_myself_and_or_my_bed_partner_with_my_snoring,
+    i_wake_myself_and_or_my_bed_partner_with_my_muscle_twitching,
+    i_get_up_at_different_times_each_morning_more_than_1_hour_variation,
+    at_home_i_sleep_in_a_less_than_ideal_environment_e_g_too_light_too_noisy_uncomfortable_bed_pillow_too_hot_cold,
+    i_sleep_in_foreign_environments_e_g_hotel_rooms,
+    travel_gets_in_the_way_of_building_a_consistent_sleep_wake_routine,
+    psqi_total,
+    comp1final,
+    comp2final,
+    comp3final,
+    comp4final,
+    comp5final,
+    comp6final,
+    comp7final,
+    percentage,
+    combined_mins,
+    psqi_cat
+    
+  ) %>%
+  mutate(
+    Name = `name`,
+    Sport = `sport`,
+    `ASBQ Score` = asbq_global,
+    `Afternoon naps` = i_take_afternoon_naps_lasting_two_or_more_hours,
+    `Stimulant use` = i_use_stimulants_when_i_train_compete_e_g_caffeine,
+    `Train late` = i_exercise_train_or_compete_late_at_night_after_7pm,
+    `Consume alcohol` = i_consume_alcohol_within_4_hours_of_going_to_bed,
+    `Varied bedtime` = i_go_to_bed_at_different_times_each_night_more_than_1_hour_variation,
+    `Thirsty` = i_go_to_bed_feeling_thirsty,
+    `Sore muscles` = i_go_to_bed_with_sore_muscles,
+    `Light emitting device use` = i_use_light_emitting_technology_in_the_hour_leading_up_to_bedtime_e_g_laptop_phone_television_video_games,
+    `Sport worries` = i_think_plan_and_worry_about_my_sporting_performance_when_i_am_in_bed,
+    `Non-sport worries` = i_think_plan_and_worry_about_issues_not_related_to_my_sport_when_i_am_in_bed,
+    `Sleeping pills` = i_use_sleeping_pills_tablets_to_help_me_sleep,
+    `Bathroom use` = i_wake_to_go_to_the_bathroom_more_than_once_per_night,
+    `Snoring` = i_wake_myself_and_or_my_bed_partner_with_my_snoring,
+    `Muscle twitching` = i_wake_myself_and_or_my_bed_partner_with_my_muscle_twitching,
+    `Varied waketime` = i_get_up_at_different_times_each_morning_more_than_1_hour_variation,
+    `Environment issues` = at_home_i_sleep_in_a_less_than_ideal_environment_e_g_too_light_too_noisy_uncomfortable_bed_pillow_too_hot_cold,
+    `Foreign environments` = i_sleep_in_foreign_environments_e_g_hotel_rooms,
+    `Travel issues` = travel_gets_in_the_way_of_building_a_consistent_sleep_wake_routine,
+    `PSQI Score` = psqi_total,
+    `PSQI Category` = psqi_cat,
+    `Comp. 1` = comp1final,
+    `Comp. 2` = comp2final,
+    `Comp. 3` = comp3final,
+    `Comp. 4` = comp4final,
+    `Comp. 5` = comp5final,
+    `Comp. 6` = comp6final,
+    `Comp. 7` = comp7final,
+    `Sleep efficiency (%)` = percentage,
+    `Sleep duration (mins)` = combined_mins
+  ) %>%
+  select(c(33:62))
+
+
+shared_sleep_details <- SharedData$new(k_means_complete_simple,
+                                       key = ~ Name,
+                                       group = "name"
+                                       )
+
+datatable(
+  data      = shared_sleep_details,
+  extensions = 'Buttons',
+  options = list(
+                dom     = 'Bfrtip',
+                # deferRender = TRUE,
+                searching = TRUE,
+                buttons = c('copy', 'csv', 'excel'),
+                autoWidth = TRUE,
+                scrollCollapse = TRUE,
+                rownames = TRUE,
+                scroller = TRUE,
+                scrollX = TRUE,
+                scrollY = "150px",
+                fixedHeader = FALSE,
+                class = 'cell-border stripe',
+                fixedColumns = list(
+                  leftColumns = 6,
+                  heightMatch = 'none'
+                  )
+                
+  )
+)
+  
+}, server = FALSE)
+
+DT::dataTableOutput("table1",
+                    height = "40em")
+
+```
