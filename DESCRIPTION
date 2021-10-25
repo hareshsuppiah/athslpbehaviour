@@ -1,6 +1,6 @@
 Package: athslpbehaviour
 Type: Package
-Title: Retrieve, clean and visualize Athlete Sleep Behaviour Questionnaire (ASBQ) and Pittsburgh Sleep Quality Index (PSQI) data collected on GSheet.
+Title: Retrieve, clean and visualize Athlete Sleep Behaviour Questionnaire (ASBQ) and Pittsburgh Sleep Quality Index (PSQI) data collected on Google Sheets.
 Version: 0.1.0
 Author: Haresh Suppiah
 Maintainer: Haresh Suppiah <haresh@humanperformance.sg>
