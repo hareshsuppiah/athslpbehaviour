@@ -2,3 +2,10 @@
 
 export(clean_sheet_data)
 export(create_dashboard)
+import(dplyr)
+import(forcats)
+import(gsheet)
+import(janitor)
+import(lubridate)
+import(stringr)
+import(weights)

@@ -7,7 +7,13 @@
 #'
 #' @return A Shiny interactive app
 #' @export
-#'
+#' @import gsheet
+#' @import dplyr
+#' @import stringr
+#' @import janitor
+#' @import lubridate
+#' @import weights
+#' @import forcats
 #' @examples
 #'
 #' create_dashboard("https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing")

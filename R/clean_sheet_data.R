@@ -7,6 +7,14 @@
 #' @return A csv file called 'asbq_psqi_df.csv' in an output folder called 'output'
 #' @export
 #'
+#' @import gsheet
+#' @import dplyr
+#' @import stringr
+#' @import janitor
+#' @import lubridate
+#' @import weights
+#' @import forcats
+#'
 #' @examples
 #'
 #' clean_sheet_data("https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing")
