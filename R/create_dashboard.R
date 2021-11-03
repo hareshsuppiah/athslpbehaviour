@@ -15,10 +15,45 @@
 #' @import weights
 #' @import forcats
 #' @import rmarkdown
+#' @import flexdashboard
+#' @import shiny
+#' @import tidyverse
+#' @import ggrepel
+#' @import data.table
+#' @import rvest
+#' @import DT
+#' @import DataExplorer
+#' @import recipes
+#' @import umap
+#' @import factoextra
+#' @import kableExtra
+#' @import crosstalk
 #' @examples
 #'
 #' create_dashboard("https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing")
 #'
+
+library(flexdashboard)
+library(shiny)
+library(shinyWidgets)
+library(tidyverse)
+library(plotly)
+library(tidyverse)
+library(ggrepel)
+library(data.table)
+library(rvest)
+library(DT)
+library(DataExplorer)
+library(recipes)
+library(dplyr)
+library(janitor)
+library(umap)
+library(forcats)
+library(factoextra)
+library(kableExtra)
+library(crosstalk)
+
+
 create_dashboard <- function(urlstring) {
 
   url_input <- as.character(urlstring)
