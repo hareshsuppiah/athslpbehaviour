@@ -14,6 +14,7 @@
 #' @import lubridate
 #' @import weights
 #' @import forcats
+#' @import rmarkdown
 #' @examples
 #'
 #' create_dashboard("https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing")
