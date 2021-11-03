@@ -39,6 +39,10 @@ The `clean_sheet_data()` function accepts 1 argument:
 
 * **urlstring**: A url for the (shared) Google Sheet containing data using the ASBQ-PSQI Google Form template.
 
+The url from the Google Sheet can be obtained using the **Share** option and copying the url link of the sheet.
+
+<img src="inst/images/copylink.png" width="800" />
+
 It returns a csv file `asbq_psqi_df.csv` in an `output` folder within the working directory.
 
 ### Create Shiny Dashboard
