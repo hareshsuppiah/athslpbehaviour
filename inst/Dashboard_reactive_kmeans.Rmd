@@ -32,15 +32,6 @@ library(crosstalk)
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-# Import data
-# load("AthSlpBehaviour.RData")
-# load(data)
-# clean_sheet_data(data_google_2)
-
-# athslpbehaviour_df <- read.csv("output/asbq_psqi_df.csv")
-# athslpbehaviour_df <- athslpbehaviour_df %>% 
-#   select(-c(X))
-
 
 asbq_psqi_df <- athslpbehaviour_df %>%
   clean_names() 
