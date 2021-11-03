@@ -24,13 +24,13 @@ devtools::install_github("hareshsuppiah/athslpbehaviour")
 * `clean_sheet_data()`
 * `create_dashboard()`
 
-### Google Form Template
+### ASBQ-PSQI Google Form Questionnaire Template
 
 A Google Form template for use with `AthSlpBehaviouR` can be dowloaded [here](https://docs.google.com/forms/d/16T_0vbpiZdNipz14kSZiGCrqVgSQ3ULNbIxYYZg0y90/template/preview).
 
 ### Cleaning data - clean_sheet_data():
 
-To clean and score PSQI and ASBQ data collected from a Google Form (and stored in a Google Sheet):
+To clean and score PSQI and ASBQ data collected from a Google Form (and stored in a Google Sheet) use:
 
 ```
 clean_sheet_data("https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing")                
@@ -41,8 +41,17 @@ The `clean_sheet_data()` function accepts 1 argument:
 
 The url from the Google Sheet can be obtained using the **Share** option and copying the url link of the sheet.
 
-<img src="inst/images/copylink.png" width="800" />
+<img src="inst/images/copylink.PNG" width="500" />
 
 It returns a csv file `asbq_psqi_df.csv` in an `output` folder within the working directory.
 
 ### Create Shiny Dashboard
+
+To create a Shiny dashboard app to aid in the categorisation and visualisation of different sleep characteristics and behaviours use:
+
+```
+create_dashboard("https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing")                
+```
+The `clean_sheet_data()` function accepts 1 argument:
+
+* **urlstring**: A url for the (shared) Google Sheet containing data using the ASBQ-PSQI Google Form template.
