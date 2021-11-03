@@ -501,6 +501,6 @@ create_dashboard <- function(urlstring) {
   # .GlobalEnv$athslpbehaviour_df <- asbq_psqi_df
 
   # Create dashboard file
-  rmarkdown::run('Dashboard_reactive_kmeans.Rmd')
+  rmarkdown::run(system.file("Dashboard_reactive_kmeans.Rmd", package = "athslpbehaviour"))
 
 }
