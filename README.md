@@ -3,7 +3,7 @@
   [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
   <!-- badges: end -->
 
-# AthSlpBehaviouR <img src="inst/logos/hex_logo.png" width="140px" height="165px" align="right" style="padding-left:10px;background-color:white;" />
+# AthSlpBehaviouR <img src="man/logos/hex_logo.png" width="140px" height="165px" align="right" style="padding-left:10px;background-color:white;" />
 
 `AthSlpBehaviouR` is intended to retrieve, clean and visualize Athlete Sleep Behaviour Questionnaire (ASBQ) and Pittsburgh Sleep Quality Index (PSQI) data collected on Google Sheets, through a Google Form template.
 
@@ -41,7 +41,7 @@ The `clean_sheet_data()` function accepts 1 argument:
 
 The url from the Google Sheet can be obtained using the **Share** option and copying the url link of the sheet.
 
-<img src="inst/images/copylink.PNG" width="500" />
+<img src="man/images/copylink.PNG" width="500" />
 
 It returns a csv file `asbq_psqi_df.csv` in an `output` folder within the working directory.
 
