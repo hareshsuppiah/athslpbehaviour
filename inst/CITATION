@@ -5,11 +5,11 @@ citEntry(
   title    = "AthSlpBehaviouR: Retrieve, clean and visualize athlete sleep behaviour and characteristics",
   author   = "Haresh Suppiah" ,
   journal  = ,
-  year     = 2020,
+  year     = "2020",
   volume   = ,
   number   = ,
   pages    = ,
-  url      = https://github.com/hareshsuppiah/athslpbehaviour,
+  url      = "https://github.com/hareshsuppiah/athslpbehaviour"",
   textVersion = paste(
 
   )
