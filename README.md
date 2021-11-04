@@ -26,6 +26,10 @@ devtools::install_github("hareshsuppiah/athslpbehaviour")
 
 A Google Form template for use with `AthSlpBehaviouR` can be downloaded [here](https://docs.google.com/forms/d/16T_0vbpiZdNipz14kSZiGCrqVgSQ3ULNbIxYYZg0y90/template/preview). **‼Note:** `AthSlpBehaviouR` will currently only work with this template.
 
+#### Pseudo ASBQ-PSQI data
+
+Pseudo data can be used to try the functions within `AthSlpBehaviouR` [here](https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing) 
+
 ## Clean and score ASBQ and PSQI data - clean_sheet_data():
 
 To clean and score PSQI and ASBQ data collected from a Google Form (and stored in a Google Sheet) use:
