@@ -155,9 +155,9 @@ sport_grp <- asbq_psqi_df %>%
   select(sport)
 psqi_cat <- asbq_psqi_df %>%
   select(psqi_cat)
-asbq_grp <- data_cleaned_full %>% 
+asbq_grp <- asbq_psqi_df %>% 
   select(asbq_global)
-psqi_grp <- data_cleaned_full %>% 
+psqi_grp <- asbq_psqi_df %>% 
   select(psqi_total)
 
 
@@ -166,8 +166,8 @@ psqi_grp <- data_cleaned_full %>%
     gender = gender_grp,
     name = name_grp,
     sport = sport_grp,
-    # psqi = psqi_grp,
-    # asbq = asbq_grp,
+    psqi = psqi_grp,
+    asbq = asbq_grp,
     psqi_cat = psqi_cat,
     cluster = k.high()$cluster
   )
@@ -192,8 +192,8 @@ umap_kmeans_high_results_tbl <- umap_high_results_tbl %>%
     cluster = k_means_complete()$cluster,
     name = k_means_complete()$name,
     sport = k_means_complete()$sport,
-    # asbq = k_means_complete()$asbq_global,
-    # psqi = k_means_complete()$psqi_total,
+    asbq = k_means_complete()$asbq,
+    psqi = k_means_complete()$psqi,
     psqi_cat = k_means_complete()$psqi_cat
     
     
