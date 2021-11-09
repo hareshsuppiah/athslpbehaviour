@@ -229,8 +229,12 @@ output$plotly_1 <- renderPlotly({
         "Sport: ", sport,
         "</br>",
         "ASBQ Score: ", asbq,
+<<<<<<< HEAD
         "</br>",
        "PSQI Score: ", psqi
+=======
+        "</br>"
+>>>>>>> 8b7370437a318425d10ab9546d84927dee11b652
         ),
       source = "A"
     ) %>%
