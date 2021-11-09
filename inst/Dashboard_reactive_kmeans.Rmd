@@ -166,7 +166,7 @@ psqi_grp <- asbq_psqi_df %>%
     gender = gender_grp,
     name = name_grp,
     sport = sport_grp,
-    psqi = psqi_grp,
+    psqi_total = psqi_grp,
     asbq = asbq_grp,
     psqi_cat = psqi_cat,
     cluster = k.high()$cluster
@@ -193,7 +193,7 @@ umap_kmeans_high_results_tbl <- umap_high_results_tbl %>%
     name = k_means_complete()$name,
     sport = k_means_complete()$sport,
     asbq = k_means_complete()$asbq,
-    psqi = k_means_complete()$psqi,
+    psqi = k_means_complete()$psqi_total,
     psqi_cat = k_means_complete()$psqi_cat
     
     
