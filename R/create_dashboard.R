@@ -54,8 +54,8 @@
 # library(crosstalk)
 # library(gsheet)
 # library(weights)
-
-
+#
+# urlstring="https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing"
 
 create_dashboard <- function(urlstring) {
 
