@@ -166,8 +166,8 @@ psqi_grp <- data_cleaned_full %>%
     gender = gender_grp,
     name = name_grp,
     sport = sport_grp,
-    asbq_global = asbq_grp,
-    psqi_total = psqi_grp,
+    psqi = psqi_grp,
+    asbq = asbq_grp,
     psqi_cat = psqi_cat,
     cluster = k.high()$cluster
   )
