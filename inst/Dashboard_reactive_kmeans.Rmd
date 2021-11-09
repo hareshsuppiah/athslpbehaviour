@@ -230,7 +230,7 @@ output$plotly_1 <- renderPlotly({
         "</br>",
         "ASBQ Score: ", asbq,
         "</br>",
-        "PSQI Score: ", psqi
+       "PSQI Score: ", psqi
         ),
       source = "A"
     ) %>%
