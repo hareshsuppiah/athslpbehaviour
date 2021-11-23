@@ -15,6 +15,11 @@ install.packages("devtools")
 devtools::install_github("hareshsuppiah/athslpbehaviour")
 ```
 
+## Load package
+```{r}
+library(athslpbehaviour)
+```
+
 # Usage
 
 `AthSlpBehaviouR` currently has two main functions - cleaning and scoring ASBQ and PSQI data, as well as creating a Shiny dashboard to aid practitioners in categorising athlete sleep characteristics and behaviours using a k-means cluster analysis. The data is collected using a standard Google Forms template (see below), which is eventually stored onto a Google Sheet.
