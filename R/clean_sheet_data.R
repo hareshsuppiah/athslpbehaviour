@@ -19,7 +19,7 @@
 #'
 #' clean_sheet_data("https://docs.google.com/spreadsheets/d/1cnb_5DUQsbee96lL_5MVtf_nI8XmJqKmYQKFP9_INJY/edit?usp=sharing")
 #'
-clean_sheet_data <- function(urlstring) {
+clean_sheet_data <- function(urlstring,morning_endtime='06:00:00', morning_correction_start='06:01:00',morning_correction_end='11:59:00') {
 
   url_input <- as.character(urlstring)
   # Create variable with Google Sheet URL. Edit the following url to the correct Google Form containing the PSQI responses
@@ -321,11 +321,24 @@ clean_sheet_data <- function(urlstring) {
 
     )
 
+  date <- '1970-01-01'
+
 
   ## Set time cutoff for midnight and six am as integer and object for 12 hours
   midnight <-
     as.integer(as.POSIXct('1970-01-01 00:00:00', tz = "GMT"))
-  sixam <-  as.integer(as.POSIXct('1970-01-01 06:00:00', tz = "GMT"))
+
+
+  #morning_endtime dynamic update to sixam value
+  sixam_date_time <- paste(date,morning_endtime)
+
+  # check if morning_endtime is correctly formatted
+  d1 <- try(as.Date(sixam_date_time, format="%Y-%m-%d %H:%M:%S"))
+  if("try-error" %in% class(d1) || is.na(d1)) {
+    print("Warning: Input for 'morning_endtime' argument needs to be in time format ('hh:mm:ss') e.g. '06:00:00'")
+  }
+
+  sixam <-  as.integer(as.POSIXct(sixam_date_time , tz = "GMT"))
 
   ## if converted time is after midnight, add by a day
   # if b$bedtime.int between midnight and sixam then b$bedtime.int +(24*60*60)
@@ -346,8 +359,30 @@ clean_sheet_data <- function(urlstring) {
     )
 
   # If converted time for bedtime indicates a morning time between 06:01am to 1159 am (error in am vs pm), add 12 hours +(12*60*60)
-  six.1 <- as.integer(as.POSIXct('1970-01-01 06:01:00', tz = "GMT"))
-  eleven.59 <- as.integer(as.POSIXct('1970-01-01 11:59:00', tz = "GMT"))
+
+  #morning_correction_start dynamic update to six.1 value
+
+  six.1_date_time <- paste(date, morning_correction_start)
+
+  # check if morning_correction_start is correctly formatted
+  d2 <- try(as.Date(six.1_date_time, format="%Y-%m-%d %H:%M:%S"))
+  if("try-error" %in% class(d2) || is.na(d2)) {
+    print("Warning: Input for 'morning_correction_start' argument needs to be in time format ('hh:mm:ss') e.g. '06:01:00'")
+  }
+
+  six.1 <- as.integer(as.POSIXct(six.1_date_time, tz = "GMT"))
+
+  #morning_correction_end dynamic update to eleven.59 value
+
+  eleven.59_date_time <- paste(date, morning_correction_end)
+
+  # check if morning_correction_end is correctly formatted
+  d3 <- try(as.Date(eleven.59_date_time, format="%Y-%m-%d %H:%M:%S"))
+  if("try-error" %in% class(d3) || is.na(d3)) {
+    print("Warning: Input for 'morning_correction_end' argument needs to be in time format ('hh:mm:ss') e.g. '06:01:00'")
+  }
+
+  eleven.59 <- as.integer(as.POSIXct(eleven.59_date_time, tz = "GMT"))
 
   j = 1
   for (j in c(1:nrow(b))) {
