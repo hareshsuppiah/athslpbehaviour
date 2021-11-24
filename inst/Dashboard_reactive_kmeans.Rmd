@@ -51,6 +51,9 @@ data_cleaned_scaled <-   scale(data_cleaned_scaled1)
 
 <!-- # Athlete Exploration -->
 
+Clustering
+============================================================
+
 ## Column {.sidebar data-width=400}
 ------------------------------------------------------------
 
@@ -370,3 +373,37 @@ DT::dataTableOutput("table1",
                     height = "40em")
 
 ```
+
+
+Summary data
+============================================================
+
+## Column {.sidebar data-width=400}
+------------------------------------------------------------
+
+```{r}
+
+dateRangeInput(
+  inputId = "date_range", 
+  label   = h4("Date Range"),
+  start   = min(processed_data_tbl$order.date), 
+  end     = max(processed_data_tbl$order.date), 
+  min     = min(processed_data_tbl$order.date), 
+  max     = max(processed_data_tbl$order.date), 
+  startview = "month")
+
+
+shinyWidgets::pickerInput(
+  inputId  = "picker_category_sport", 
+  label    = h4("Sport"), 
+  choices  = unique(data_cleaned_scaled1$Sport), 
+  selected = unique(data_cleaned_scaled1$Sport), 
+  multiple = TRUE,
+  options  = list(
+    `actions-box` = TRUE,
+    size = 10,
+    `selected-text-format` = "count > 3"
+  )
+)
+
+

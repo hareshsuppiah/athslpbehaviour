@@ -3,6 +3,9 @@
 #' Clean ASBQ & PSQI Google Sheet data
 #'
 #' @param urlstring Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
+#' @param morning_endtime Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
+#' @param morning_correction_start Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
+#' @param morning_correction_end Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
 #'
 #' @return A csv file called 'asbq_psqi_df.csv' in an output folder called 'output'
 #' @export
