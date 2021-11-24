@@ -73,6 +73,7 @@ The function creates an interactive Shiny Flexdashboard that helps categorise th
 
 - [x] ASBQ and PSQI data cleaning function // *clean_sheet_data()*
 - [x] Interactive Shiny Dashboard to visualise and categorise athlete sleep based on ASBQ and PSQI data // *create_dashboard()*
+- [ ] Create new page with reactive summary tables for ASBQ and PSQI variables
 - [ ] ASBQ-only data cleaning function
 - [ ] PSQI-only data cleaning function
 - [ ] Sleep habit intervention recommendations system based on clustering
