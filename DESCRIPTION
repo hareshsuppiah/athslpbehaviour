@@ -1,7 +1,7 @@
 Package: athslpbehaviour
 Type: Package
 Title: Retrieve, clean and visualize Athlete Sleep Behaviour Questionnaire (ASBQ) and Pittsburgh Sleep Quality Index (PSQI) data collected on Google Sheets.
-Version: 0.1.0
+Version: 0.2.0
 Author: Haresh Suppiah
 Maintainer: Haresh Suppiah <haresh@humanperformance.sg>
 Description: Contains functions to clean and dashboard ASBQ + PSQI data collected from a shared Google Sheet, using a Google Form template. The dashboard app provides an automated and interactive interface that generates clusters using a k-means algorithm to help practitioners identify athletes with differing sleep characteristics and behaviours. The app also includes an accompanying interactive datatable that allows for data to be downloaded.
