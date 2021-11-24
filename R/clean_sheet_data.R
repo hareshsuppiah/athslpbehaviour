@@ -3,9 +3,9 @@
 #' Clean ASBQ & PSQI Google Sheet data
 #'
 #' @param urlstring Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
-#' @param morning_endtime Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
-#' @param morning_correction_start Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
-#' @param morning_correction_end Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled
+#' @param morning_endtime Input time string to indicate the morning cutoff time. Default is '06:00:00'
+#' @param morning_correction_start Input time string to indicate the start time for corrections to occur to correct potential participant error in bedtime inputs. E.g. if participant indicates a bedtime of 7 am as a bedtime, this will be corrected to a 'pm' value. Default is '06:01:00'
+#' @param morning_correction_end Input time string to indicate the end time for corrections to occur to correct potential participant error in bedtime inputs. E.g. if participant indicates a bedtime of 7 am as a bedtime, this will be corrected to a 'pm' value. Default is '11:59:00'
 #'
 #' @return A csv file called 'asbq_psqi_df.csv' in an output folder called 'output'
 #' @export
