@@ -4,10 +4,21 @@
 \alias{create_dashboard}
 \title{Generate an interactive Shiny dashboard app with ASBQ & PSQI Google Sheet data k-means clustering}
 \usage{
-create_dashboard(urlstring)
+create_dashboard(
+  urlstring,
+  morning_endtime = "06:00:00",
+  morning_correction_start = "06:01:00",
+  morning_correction_end = "11:59:00"
+)
 }
 \arguments{
 \item{urlstring}{Input url string of Google Sheet data. Ensure that sharing is enabled on the GSheet is enabled}
+
+\item{morning_endtime}{Input time string to indicate the morning cutoff time. Default is '06:00:00'}
+
+\item{morning_correction_start}{Input time string to indicate the start time for corrections to occur to correct potential participant error in bedtime inputs. E.g. if participant indicates a bedtime of 7 am as a bedtime, this will be corrected to a 'pm' value. Default is '06:01:00'}
+
+\item{morning_correction_end}{Input time string to indicate the end time for corrections to occur to correct potential participant error in bedtime inputs. E.g. if participant indicates a bedtime of 7 am as a bedtime, this will be corrected to a 'pm' value. Default is '11:59:00'}
 }
 \value{
 A Shiny interactive app
