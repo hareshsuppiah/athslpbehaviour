@@ -498,11 +498,23 @@ create_dashboard <- function(urlstring,morning_endtime='06:00:00', morning_corre
 
     )
 
+  # Change Timestamp variable to date-only variable
+  b <- b %>%
+    separate(Timestamp,
+             into = c("date_administered","time_administered"),
+             sep = " ",
+             remove = FALSE) %>%
+    mutate(
+      date_administered = mdy(date_administered)
+    )
+
+
   # Create new dataframe with necessary columns from ASBQ and PSQI ----
 
   asbq_psqi_df <- b %>%
     select(
-      c(Name,
+      c(date_administered,
+        Name,
         Gender,
         Sport,
         psqi.cat,
