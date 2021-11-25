@@ -386,18 +386,18 @@ Summary data
 dateRangeInput(
   inputId = "date_range", 
   label   = h4("Date Range"),
-  start   = min(processed_data_tbl$order.date), 
-  end     = max(processed_data_tbl$order.date), 
-  min     = min(processed_data_tbl$order.date), 
-  max     = max(processed_data_tbl$order.date), 
+  start   = min(asbq_psqi_df$date_administered), 
+  end     = max(asbq_psqi_df$date_administered), 
+  min     = min(asbq_psqi_df$date_administered), 
+  max     = max(asbq_psqi_df$date_administered), 
   startview = "month")
 
 
 shinyWidgets::pickerInput(
   inputId  = "picker_category_sport", 
   label    = h4("Sport"), 
-  choices  = unique(data_cleaned_scaled1$Sport), 
-  selected = unique(data_cleaned_scaled1$Sport), 
+  choices  = unique(asbq_psqi_df$sport), 
+  selected = unique(asbq_psqi_df$sport), 
   multiple = TRUE,
   options  = list(
     `actions-box` = TRUE,
