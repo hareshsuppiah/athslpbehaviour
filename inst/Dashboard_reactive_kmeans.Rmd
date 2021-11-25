@@ -40,7 +40,7 @@ asbq_psqi_df <- athslpbehaviour_df %>%
 
 data_cleaned_scaled1 <- asbq_psqi_df %>%
   select(-c(asbq_global, psqi_total)) %>% 
-  select(5:31)
+  select(6:32)
 
 data_cleaned_scaled <-   scale(data_cleaned_scaled1)
 
@@ -384,20 +384,20 @@ Summary data
 ```{r}
 
 dateRangeInput(
-  inputId = "date_range", 
+  inputId = "date_range",
   label   = h4("Date Range"),
-  start   = min(asbq_psqi_df$date_administered), 
-  end     = max(asbq_psqi_df$date_administered), 
-  min     = min(asbq_psqi_df$date_administered), 
-  max     = max(asbq_psqi_df$date_administered), 
+  start   = min(asbq_psqi_df$date_administered),
+  end     = max(asbq_psqi_df$date_administered),
+  min     = min(asbq_psqi_df$date_administered),
+  max     = max(asbq_psqi_df$date_administered),
   startview = "month")
 
 
 shinyWidgets::pickerInput(
-  inputId  = "picker_category_sport", 
-  label    = h4("Sport"), 
-  choices  = unique(asbq_psqi_df$sport), 
-  selected = unique(asbq_psqi_df$sport), 
+  inputId  = "picker_category_sport",
+  label    = h4("Sport"),
+  choices  = sort(as.character(unique(asbq_psqi_df$sport))),
+  selected = sort(as.character(unique(asbq_psqi_df$sport))),
   multiple = TRUE,
   options  = list(
     `actions-box` = TRUE,
@@ -405,5 +405,156 @@ shinyWidgets::pickerInput(
     `selected-text-format` = "count > 3"
   )
 )
+
+# Add filter by gender
+
+
+# Add filter by PSQI category
+
+# Add filter by athlete name
+
+```
+
+
+
+```{r}
+
+asbq_psqi_tbl <- reactive({
+  
+  asbq_psqi_df %>% 
+    
+    
+    dplyr::filter(date_administered %>% dplyr::between(left = ymd(input$date_range[1]),
+                                         right = ymd(input$date_range[2]))) %>% 
+    
+    dplyr::filter(sport %in% input$picker_category_sport)
+
+  # asbq_psqi_df %>%
+  #   dplyr::filter(date_administered %in% ymd("2021-11-25"))
+    
+  
+  
+})
+
+```
+
+## Column 1
+
+### Athlete Information
+
+```{r}
+output$table2 <- DT::renderDataTable({
+  
+  asbq_psqi_summary <- asbq_psqi_tbl() %>%
+    select(
+      name,
+      gender,
+      sport,
+      percentage,
+      combined_mins,
+      psqi_total,
+      asbq_global
+    ) %>%
+    mutate(
+      Name = `name`,
+      Sport = `sport`,
+      Gender = `gender`,
+      `ASBQ Score` = asbq_global,
+      `Sleep efficiency (%)` = round(percentage,2),
+      `Sleep duration (mins)` = combined_mins,
+      `Sleep duration (hrs)` = round(combined_mins/60,2),
+      `PSQI Score` = `psqi_total`
+      ) %>% 
+    select(8:15)
+   
+   shared_asbq_psqi_details <- SharedData$new(asbq_psqi_summary)
+
+datatable(
+  data      = shared_asbq_psqi_details,
+  extensions = 'Buttons',
+  options = list(
+                dom     = 'Bfrtip',
+                # deferRender = TRUE,
+                searching = TRUE,
+                buttons = c('copy', 'csv', 'excel'),
+                autoWidth = TRUE,
+                scrollCollapse = TRUE,
+                rownames = TRUE,
+                scroller = TRUE,
+                scrollX = TRUE,
+                scrollY = "768px",
+                fixedHeader = FALSE,
+                class = 'cell-border stripe'
+                
+  )
+)
+  
+}, server = FALSE)
+
+DT::dataTableOutput("table2")
+    
+
+```
+
+### Summary Information
+
+```{r}
+
+output$table3 <- DT::renderDataTable({
+  
+  asbq_psqi_summary2 <- asbq_psqi_tbl() %>%
+    select(
+      percentage,
+      combined_mins,
+      psqi_total,
+      asbq_global
+    ) %>%
+    mutate(
+      `ASBQ Score` = asbq_global,
+      `Sleep efficiency (%)` = percentage,
+      `Sleep duration (mins)` = combined_mins,
+      `Sleep duration (hrs)` = round(combined_mins/60,2),
+      `PSQI Score` = `psqi_total`
+      
+    ) %>% 
+    select(5:9) %>% 
+    summarise(
+      `Average ASBQ Score` = round(mean(`ASBQ Score`),2),
+      `Average PSQI Score` = round(mean(`PSQI Score`),2),
+      `Average sleep duration (mins)` = round(mean(`Sleep duration (mins)`),2),
+      `Average sleep duration (hrs)` = round(mean(`Sleep duration (hrs)`),2),
+      `Average sleep efficiency (%)` = round(mean(`Sleep efficiency (%)`),2)
+    )
+    
+     shared_asbq_psqi_details2 <- SharedData$new(asbq_psqi_summary2)
+
+datatable(
+  data      = shared_asbq_psqi_details2,
+  extensions = 'Buttons',
+  options = list(
+                dom     = 'Bfrtip',
+                # deferRender = TRUE,
+                searching = TRUE,
+                buttons = c('copy', 'csv', 'excel'),
+                autoWidth = TRUE,
+                scrollCollapse = TRUE,
+                rownames = TRUE,
+                scroller = TRUE,
+                scrollX = TRUE,
+                scrollY = "500px",
+                fixedHeader = FALSE,
+                class = 'cell-border stripe'
+                
+  )
+)
+  
+}, server = FALSE)
+
+
+DT::dataTableOutput("table3")
+
+```
+
+
 
 
