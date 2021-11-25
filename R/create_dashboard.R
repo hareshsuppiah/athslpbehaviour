@@ -31,6 +31,7 @@
 #' @import factoextra
 #' @import kableExtra
 #' @import crosstalk
+#' @import tidyr
 #'
 #' @examples
 #'
