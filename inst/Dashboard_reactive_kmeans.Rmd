@@ -2,11 +2,20 @@
 title: "Athlete Sleep Characteristics Dashboard"
 output: 
   flexdashboard::flex_dashboard:
+    logo: man/logos/hex_logo.png
+    theme:
+      version: 4
+      navbar-bg: "#000000"
     orientation: rows
     vertical_layout: fill
-    css: css/styles-default.css
 runtime: shiny
 ---
+
+```{css my-logo, echo = FALSE}
+.navbar-logo{
+    width: 50px
+}
+```
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
