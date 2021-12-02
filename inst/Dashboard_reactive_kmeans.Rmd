@@ -2,11 +2,9 @@
 title: "Athlete Sleep Characteristics Dashboard"
 output: 
   flexdashboard::flex_dashboard:
-    theme:
-      version: 4
     orientation: rows
     vertical_layout: fill
-    css: ../css/styles-default.css
+    css: css/styles-default.css
 runtime: shiny
 ---
 
