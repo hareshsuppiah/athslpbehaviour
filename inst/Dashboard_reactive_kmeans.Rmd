@@ -2,7 +2,7 @@
 title: "Athlete Sleep Characteristics Dashboard"
 output: 
   flexdashboard::flex_dashboard:
-    logo: "www/hex_logo.png"
+    logo: logos/hex_logo.png
     theme:
       version: 4
       navbar-bg: "#000000"
