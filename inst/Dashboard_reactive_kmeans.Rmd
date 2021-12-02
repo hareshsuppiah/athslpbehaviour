@@ -6,6 +6,7 @@ output:
       version: 4
     orientation: rows
     vertical_layout: fill
+    css: css/styles.-default.css
 runtime: shiny
 ---
 
@@ -76,7 +77,7 @@ shiny::numericInput(
 
 ```
 
-The optimal number of classification groups (clusters) can be determined using the *elbow method*.
+The optimal number of classification groups (clusters) can be determined using the *elbow method*. If the line chart looks like an arm, then the “elbow” (the point of inflection on the curve) is the best value of k.
 
 <hr>
 
@@ -523,7 +524,7 @@ asbq_psqi_tbl <- reactive({
 
 ## Column 1
 
-### Athlete Information
+## Athlete Information
 
 ```{r}
 output$table2 <- DT::renderDataTable({
@@ -579,7 +580,7 @@ DT::dataTableOutput("table2")
 
 ```
 
-### Summary Information
+## Group Summary Information
 
 ```{r}
 
