@@ -524,7 +524,7 @@ asbq_psqi_tbl <- reactive({
 
 ## Column 1
 
-## Athlete Information
+### Athlete Information
 
 ```{r}
 output$table2 <- DT::renderDataTable({
@@ -580,7 +580,7 @@ DT::dataTableOutput("table2")
 
 ```
 
-## Group Summary Information
+### Group Summary Information
 
 ```{r}
 
