@@ -7,7 +7,7 @@ output:
       navbar-bg: "#000000"
     orientation: rows
     vertical_layout: fill
-    logo: hex_logo.png
+    logo: www/hex_logo.png
 runtime: shiny
 ---
 
