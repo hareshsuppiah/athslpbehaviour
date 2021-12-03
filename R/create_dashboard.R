@@ -547,7 +547,10 @@ create_dashboard <- function(urlstring,morning_endtime='06:00:00', morning_corre
         comp6final,
         comp7final,
         psqi.total,
-        combined_mins
+        combined_mins,
+        bedtime.int,
+        bedtime.conv,
+        waketime.date
 
       )
     )
