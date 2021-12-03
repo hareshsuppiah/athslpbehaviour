@@ -591,6 +591,7 @@ DT::dataTableOutput("table2")
 
 ```{r}
 
+
 output$table3 <- DT::renderDataTable({
   
   asbq_psqi_summary2 <- asbq_psqi_tbl() %>%
@@ -598,21 +599,27 @@ output$table3 <- DT::renderDataTable({
       percentage,
       combined_mins,
       psqi_total,
-      asbq_global
+      asbq_global,
+      bedtime_conv,
+      waketime_date
     ) %>%
     mutate(
       `ASBQ Score` = asbq_global,
       `Sleep efficiency (%)` = percentage,
       # `Sleep duration (mins)` = combined_mins,
       `Sleep duration (hrs)` = round(combined_mins/60,1),
-      `PSQI Score` = `psqi_total`
+      `PSQI Score` = `psqi_total`,
+      `Bedtime` = bedtime_conv,
+      `Waketime` = waketime_date,
       
     ) %>% 
-    select(5:8) %>% 
+    select(7:12) %>% 
     summarise(
       `Average ASBQ Score` = round(mean(`ASBQ Score`),1),
       `Average PSQI Score` = round(mean(`PSQI Score`),1),
       # `Average sleep duration (mins)` = round(mean(`Sleep duration (mins)`),1),
+      `Average bedtime` =  format(as.POSIXct(mean(`Bedtime`)), format = "%H:%M"),
+      `Average waketime` =  format(as.POSIXct(mean(`Waketime`)), format = "%H:%M"),
       `Average sleep duration (hrs)` = round(mean(`Sleep duration (hrs)`),1),
       `Average sleep efficiency (%)` = round(mean(`Sleep efficiency (%)`),1)
     )
