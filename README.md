@@ -67,6 +67,10 @@ The function creates an interactive Shiny Flexdashboard that helps categorise th
 
 <img src="man/images/ShinyDashboard2.JPG" width="700" />
 
+The 'Summary data' tab also provides users with the ability to filter the data by sport, gender, PSQI category, PSQI score, ASBQ score and sleep duration. The middle panel displays the individual athlete information while the right panel shows the group information averaged.
+
+<img src="man/images/ShinyDashboard3.JPG" width="700" />
+
 # Future development
 
 `AthSlpBehaviouR` is still under development and may change over time. Here is a brief roadmap and future updates:
