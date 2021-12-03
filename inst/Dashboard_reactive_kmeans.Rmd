@@ -544,21 +544,26 @@ output$table2 <- DT::renderDataTable({
       percentage,
       combined_mins,
       psqi_total,
-      asbq_global
+      asbq_global,
+      bedtime_conv,
+      waketime_date
     ) %>%
     mutate(
       Name = `name`,
       Sport = `sport`,
       Gender = `gender`,
       `ASBQ Score` = asbq_global,
+      `PSQI Score` = `psqi_total`,
+      `Bedtime` = format(as.POSIXct(bedtime_conv), format = "%H:%M"),
+      `Waketime` = format(as.POSIXct(waketime_date), format = "%H:%M"),
       `Sleep efficiency (%)` = round(percentage,1),
       # `Sleep duration (mins)` = combined_mins,
-      `Sleep duration (hrs)` = round(combined_mins/60,1),
-      `PSQI Score` = `psqi_total`
+      `Sleep duration (hrs)` = round(combined_mins/60,1)
       ) %>% 
-    select(8:14)
+    select(10:18)
    
    shared_asbq_psqi_details <- SharedData$new(asbq_psqi_summary)
+   
 
 datatable(
   data      = shared_asbq_psqi_details,
@@ -573,12 +578,14 @@ datatable(
                 rownames = TRUE,
                 scroller = TRUE,
                 scrollX = TRUE,
-                scrollY = "768px",
+                scrollY = "600px",
                 fixedHeader = FALSE,
-                class = 'cell-border stripe'
-                
-  )
-)
+                class = 'cell-border stripe',
+                fixedColumns = list(
+                  leftColumns = 6,
+                  heightMatch = 'none'
+                  )
+))
   
 }, server = FALSE)
 
@@ -590,7 +597,6 @@ DT::dataTableOutput("table2")
 ### Group Summary Information
 
 ```{r}
-
 
 output$table3 <- DT::renderDataTable({
   
