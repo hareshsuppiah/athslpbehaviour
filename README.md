@@ -65,7 +65,7 @@ The `create_dashboard()` function accepts 1 argument:
 
 The function creates an interactive Shiny Flexdashboard that helps categorise the sleep characteristics and behaviours of athletes using a k-means cluster analysis.
 
-<img src="man/images/ShinyDashboard2.PNG" width="700" />
+<img src="man/images/ShinyDashboard2.JPG" width="700" />
 
 # Future development
 
