@@ -65,7 +65,7 @@ The `create_dashboard()` function accepts 1 argument:
 
 The function creates an interactive Shiny Flexdashboard that helps categorise the sleep characteristics and behaviours of athletes using a k-means cluster analysis.
 
-<img src="man/images/ShinyDashboard.PNG" width="700" />
+<img src="man/images/ShinyDashboard2.PNG" width="700" />
 
 # Future development
 
@@ -73,7 +73,7 @@ The function creates an interactive Shiny Flexdashboard that helps categorise th
 
 - [x] ASBQ and PSQI data cleaning function // *clean_sheet_data()*
 - [x] Interactive Shiny Dashboard to visualise and categorise athlete sleep based on ASBQ and PSQI data // *create_dashboard()*
-- [ ] Create new page with reactive summary tables for ASBQ and PSQI variables
+- [x] Create new page with reactive summary tables for ASBQ and PSQI variables
 - [ ] ASBQ-only data cleaning function
 - [ ] PSQI-only data cleaning function
 - [ ] Sleep habit intervention recommendations system based on clustering
