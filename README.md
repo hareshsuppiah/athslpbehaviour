@@ -7,7 +7,7 @@
 
 `AthSlpBehaviouR` is intended to retrieve, clean and visualize Athlete Sleep Behaviour Questionnaire (ASBQ) and Pittsburgh Sleep Quality Index (PSQI) data collected on Google Sheets, through a Google Form template.
 
-## Installation - Latest Development Version from Github
+## Installation
 
 ```{r}
 #Install the development version from GitHub  
