@@ -7,7 +7,7 @@
 
 `AthSlpBehaviouR` is intended to retrieve, clean and visualize Athlete Sleep Behaviour Questionnaire (ASBQ) and Pittsburgh Sleep Quality Index (PSQI) data collected on Google Sheets, through a Google Form template.
 
-## Installation - Latest Development Version from Github
+## Installation
 
 ```{r}
 #Install the development version from GitHub  
@@ -65,7 +65,11 @@ The `create_dashboard()` function accepts 1 argument:
 
 The function creates an interactive Shiny Flexdashboard that helps categorise the sleep characteristics and behaviours of athletes using a k-means cluster analysis.
 
-<img src="man/images/ShinyDashboard.PNG" width="700" />
+<img src="man/images/ShinyDashboard2.JPG" width="700" />
+
+The 'Summary data' tab also provides users with the ability to filter the data by sport, gender, PSQI category, PSQI score, ASBQ score and sleep duration. The middle panel displays the individual athlete information while the right panel shows the group information averaged.
+
+<img src="man/images/ShinyDashboard3.JPG" width="700" />
 
 # Future development
 
@@ -73,7 +77,7 @@ The function creates an interactive Shiny Flexdashboard that helps categorise th
 
 - [x] ASBQ and PSQI data cleaning function // *clean_sheet_data()*
 - [x] Interactive Shiny Dashboard to visualise and categorise athlete sleep based on ASBQ and PSQI data // *create_dashboard()*
-- [ ] Create new page with reactive summary tables for ASBQ and PSQI variables
+- [x] Create new page with reactive summary tables for ASBQ and PSQI variables
 - [ ] ASBQ-only data cleaning function
 - [ ] PSQI-only data cleaning function
 - [ ] Sleep habit intervention recommendations system based on clustering
